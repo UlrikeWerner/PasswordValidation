@@ -34,4 +34,44 @@ public class PasswortvalidierungTest {
         boolean actual = Passwortvalidierung.hasANumber(password);
         Assertions.assertFalse(actual);
     }
+
+    @Test
+    void returnTrueWhenThePasswordContainsUpperAndLowerCaseLetter(){
+        String password = "CUrryWursT";
+
+        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        Assertions.assertTrue(actual);
+    }
+
+    @Test
+    void returnFalseWhenThePasswordContainsOnlyLowerCaseLetter(){
+        String password = "currywurst";
+
+        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        Assertions.assertFalse(actual);
+    }
+
+    @Test
+    void returnFalseWhenThePasswordContainsOnlyUpperCaseLetter(){
+        String password = "CURRYWURST";
+
+        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        Assertions.assertFalse(actual);
+    }
+
+    @Test
+    void returnFalseWhenThePasswordContainsOnlyNumbers(){
+        String password = "273456219487";
+
+        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        Assertions.assertFalse(actual);
+    }
+
+    @Test
+    void returnFalseWhenThePasswordContainsOnlySpecialCharacter(){
+        String password = "§/&),*§#";
+
+        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        Assertions.assertFalse(actual);
+    }
 }
