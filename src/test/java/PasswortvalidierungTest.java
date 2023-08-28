@@ -91,4 +91,36 @@ public class PasswortvalidierungTest {
         boolean actual = Passwortvalidierung.isBadPassword(password);
         assertFalse(actual);
     }
+
+    @Test
+    void returnTrueWhenThePasswordHasAtLeastOneSpecialCharacter(){
+        String password = "pasS12&3k=";
+
+        boolean actual = Passwortvalidierung.hasSpecialCharacter(password);
+        assertTrue(actual);
+    }
+
+    @Test
+    void returnFalseWhenThePasswordHasNoSpecialCharacter(){
+        String password = "aA12bB34cC";
+
+        boolean actual = Passwortvalidierung.hasSpecialCharacter(password);
+        assertFalse(actual);
+    }
+
+    @Test
+    void returnTrueWhenThePasswordIsValidated(){
+        String password = "4q75rRe)";
+
+        boolean actual = Passwortvalidierung.checkPassword(password);
+        assertTrue(actual);
+    }
+
+    @Test
+    void returnFalseWhenThePasswordIsNotValidated(){
+        String password = "aA12bB34cC";
+
+        boolean actual = Passwortvalidierung.checkPassword(password);
+        assertFalse(actual);
+    }
 }
