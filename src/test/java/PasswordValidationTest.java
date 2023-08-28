@@ -1,15 +1,20 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import java.util.Random;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PasswortvalidierungTest {
+public class PasswordValidationTest {
 
     @Test
     void returnTrueWhenPasswordIsMinMIN_PASSWORD_LEMGTH(){
         String password = "hxiw253hd";
 
-        boolean actual = Passwortvalidierung.hasMinPasswordLength(password);
+        boolean actual = PasswordValidation.hasMinPasswordLength(password);
         assertTrue(actual);
     }
 
@@ -17,7 +22,7 @@ public class PasswortvalidierungTest {
     void returnFalseWhenPasswordLengthIsUnder8(){
         String password = "hey";
 
-        boolean actual = Passwortvalidierung.hasMinPasswordLength(password);
+        boolean actual = PasswordValidation.hasMinPasswordLength(password);
         assertFalse(actual);
     }
 
@@ -25,7 +30,7 @@ public class PasswortvalidierungTest {
     void returnTrueWhenThePasswordHasANumber(){
         String password = "currywurst17";
 
-        boolean actual = Passwortvalidierung.hasANumber(password);
+        boolean actual = PasswordValidation.hasANumber(password);
         assertTrue(actual);
     }
 
@@ -33,7 +38,7 @@ public class PasswortvalidierungTest {
     void returnTrueWhenThePasswordHasNotANumber(){
         String password = "currywurst";
 
-        boolean actual = Passwortvalidierung.hasANumber(password);
+        boolean actual = PasswordValidation.hasANumber(password);
         assertFalse(actual);
     }
 
@@ -41,7 +46,7 @@ public class PasswortvalidierungTest {
     void returnTrueWhenThePasswordContainsUpperAndLowerCaseLetter(){
         String password = "CUrrywurst";
 
-        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        boolean actual = PasswordValidation.hasUpperAndLowerCaseLetter(password);
         assertTrue(actual);
     }
 
@@ -49,7 +54,7 @@ public class PasswortvalidierungTest {
     void returnFalseWhenThePasswordContainsOnlyLowerCaseLetter(){
         String password = "currywurst";
 
-        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        boolean actual = PasswordValidation.hasUpperAndLowerCaseLetter(password);
         assertFalse(actual);
     }
 
@@ -57,7 +62,7 @@ public class PasswortvalidierungTest {
     void returnFalseWhenThePasswordContainsOnlyUpperCaseLetter(){
         String password = "CURRYWURST";
 
-        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        boolean actual = PasswordValidation.hasUpperAndLowerCaseLetter(password);
         assertFalse(actual);
     }
 
@@ -65,7 +70,7 @@ public class PasswortvalidierungTest {
     void returnFalseWhenThePasswordContainsOnlyNumbers(){
         String password = "273456219487";
 
-        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        boolean actual = PasswordValidation.hasUpperAndLowerCaseLetter(password);
         assertFalse(actual);
     }
 
@@ -73,14 +78,14 @@ public class PasswortvalidierungTest {
     void returnFalseWhenThePasswordContainsOnlySpecialCharacter(){
         String password = "§/&),*§#";
 
-        boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
+        boolean actual = PasswordValidation.hasUpperAndLowerCaseLetter(password);
         assertFalse(actual);
     }
     @Test
     void returnTrueWhenThePasswordIsABadPassword(){
         String password = "password123";
 
-        boolean actual = Passwortvalidierung.isBadPassword(password);
+        boolean actual = PasswordValidation.isBadPassword(password);
         assertTrue(actual);
     }
 
@@ -88,7 +93,7 @@ public class PasswortvalidierungTest {
     void returnFalseWhenThePasswordIsABadPassword(){
         String password = "§/16Ak&),jH*9§#";
 
-        boolean actual = Passwortvalidierung.isBadPassword(password);
+        boolean actual = PasswordValidation.isBadPassword(password);
         assertFalse(actual);
     }
 
@@ -96,7 +101,7 @@ public class PasswortvalidierungTest {
     void returnTrueWhenThePasswordHasAtLeastOneSpecialCharacter(){
         String password = "pasS12&3k=";
 
-        boolean actual = Passwortvalidierung.hasSpecialCharacter(password);
+        boolean actual = PasswordValidation.hasSpecialCharacter(password);
         assertTrue(actual);
     }
 
@@ -104,7 +109,7 @@ public class PasswortvalidierungTest {
     void returnFalseWhenThePasswordHasNoSpecialCharacter(){
         String password = "aA12bB34cC";
 
-        boolean actual = Passwortvalidierung.hasSpecialCharacter(password);
+        boolean actual = PasswordValidation.hasSpecialCharacter(password);
         assertFalse(actual);
     }
 
@@ -112,7 +117,7 @@ public class PasswortvalidierungTest {
     void returnTrueWhenThePasswordIsValidated(){
         String password = "4q75rRe)";
 
-        boolean actual = Passwortvalidierung.checkPassword(password);
+        boolean actual = PasswordValidation.checkPassword(password);
         assertTrue(actual);
     }
 
@@ -120,7 +125,25 @@ public class PasswortvalidierungTest {
     void returnFalseWhenThePasswordIsNotValidated(){
         String password = "aA12bB34cC";
 
-        boolean actual = Passwortvalidierung.checkPassword(password);
+        boolean actual = PasswordValidation.checkPassword(password);
         assertFalse(actual);
+    }
+
+    //static String[] passwordList = {"i|7+ptV3Es-H", "hT25,iez9"};
+    @ParameterizedTest
+    @MethodSource("generate5Passwords")
+    void returnTrueWhenPasswordAreValided(String password){
+        assertTrue(PasswordValidation.checkPassword(password));
+    }
+
+    static Stream<String> generate5Passwords(){
+        int listLength = 5;
+        String[] list = new String[listLength];
+        Random random = new Random();
+        int maxPasswordLength = 15;
+        for(int i = 0; i < listLength; i++){
+            list[i] = PasswordValidation.generateRandomPassword(random.nextInt(maxPasswordLength -4));
+        }
+        return Stream.of(list[0], list[1], list[2], list[3], list[4]);
     }
 }
