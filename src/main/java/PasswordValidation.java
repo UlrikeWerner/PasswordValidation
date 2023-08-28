@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -24,27 +26,27 @@ public class PasswordValidation {
         System.out.println(p);
     }
 
-    public static boolean hasMinPasswordLength(String password) {
+    public static boolean hasMinPasswordLength(@NotNull String password) {
         return password.length() >= MIN_PASSWORD_LENGTH;
     }
 
-    public static boolean hasANumber(String password) {
+    public static boolean hasANumber(@NotNull String password) {
         return Pattern.matches("(.*\\d.*)", password);
     }
 
-    public static boolean hasUpperAndLowerCaseLetter(String password) {
+    public static boolean hasUpperAndLowerCaseLetter(@NotNull String password) {
         return Pattern.matches("(.*[a-z].*)(.*[A-Z].*)|(.*[A-Z].*)(.*[a-z].*)", password);
     }
 
-    public static boolean hasSpecialCharacter(String password) {
+    public static boolean hasSpecialCharacter(@NotNull String password) {
         return Pattern.matches("(.*[~`!@#$%^&*()\\-_=+\\[{\\]}\\\\|;:'\",<.>/?].*)", password);
     }
 
-    public static boolean isBadPassword(String password) {
+    public static boolean isBadPassword(@NotNull String password) {
         return Arrays.asList(BLACK_LIST).contains(password);
     }
 
-    public static boolean checkPassword(String password){
+    public static boolean checkPassword(@NotNull String password){
         boolean minLength = hasMinPasswordLength(password);
         boolean minOneNumber = hasANumber(password);
         boolean upperAndLowerCase = hasUpperAndLowerCaseLetter(password);
@@ -52,7 +54,7 @@ public class PasswordValidation {
         boolean isNotBad = !isBadPassword(password);
         return minLength && minOneNumber && upperAndLowerCase && minOneSpecialCharacter && isNotBad;
     }
-
+    @NotNull
     public static String generateRandomPassword(int len)
     {
         if(len < MIN_PASSWORD_LENGTH){
