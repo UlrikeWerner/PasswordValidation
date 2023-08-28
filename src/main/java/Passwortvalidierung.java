@@ -11,13 +11,7 @@ public class Passwortvalidierung {
     }
 
     public static boolean hasANumber(String password) {
-        char[] cPassword = password.toCharArray();
-        for(char c : cPassword){
-            if(Character.isDigit(c)){
-                return true;
-            }
-        }
-        return false;
+        return Pattern.matches("(.*\\d.*)", password);
     }
 
     public static boolean hasUpperAndLowerCaseLetter(String password) {
