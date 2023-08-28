@@ -24,15 +24,24 @@ public class Passwortvalidierung {
     }
 
     public static boolean hasUpperAndLowerCaseLetter(String password) {
-        return Pattern.matches("(.*[a-z].*)(.*[A-Z].*)", password);
+        return Pattern.matches("(.*[a-z].*)(.*[A-Z].*)|(.*[A-Z].*)(.*[a-z].*)", password);
     }
 
     public static boolean hasSpecialCharacter(String password) {
-        return Pattern.matches("(.*\\W.*)", password);
+        return Pattern.matches("(.*[~`!@#$%^&*()\\-_=+\\[{\\]}\\\\|;:'\",<.>/?].*)", password);
     }
 
     public static boolean isBadPassword(String password) {
         return Arrays.asList(BLACK_LIST).contains(password);
+    }
+
+    public static boolean checkPassword(String password){
+        boolean minLength = hasMinPasswordLength(password);
+        boolean minOneNumber = hasANumber(password);
+        boolean upperAndLowerCase = hasUpperAndLowerCaseLetter(password);
+        boolean minOneSpecialCharacter = hasSpecialCharacter(password);
+        boolean isNotBad = !isBadPassword(password);
+        return minLength && minOneNumber && upperAndLowerCase && minOneSpecialCharacter && isNotBad;
     }
 
     public static String generateRandomPassword(int len)
@@ -49,14 +58,5 @@ public class Passwortvalidierung {
         }
 
         return sb.toString();
-    }
-
-    public static boolean checkPassword(String password){
-        boolean minLength = hasMinPasswordLength(password);
-        boolean minOneNumber = hasANumber(password);
-        boolean upperAndLowerCase = hasUpperAndLowerCaseLetter(password);
-        boolean minOneSpecialCharacter = hasSpecialCharacter(password);
-        boolean isNotBad = !isBadPassword(password);
-        return minLength && minOneNumber && upperAndLowerCase && minOneSpecialCharacter && isNotBad;
     }
 }

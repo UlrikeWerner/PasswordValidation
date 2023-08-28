@@ -39,7 +39,7 @@ public class PasswortvalidierungTest {
 
     @Test
     void returnTrueWhenThePasswordContainsUpperAndLowerCaseLetter(){
-        String password = "CUrryWursT";
+        String password = "CUrrywurst";
 
         boolean actual = Passwortvalidierung.hasUpperAndLowerCaseLetter(password);
         assertTrue(actual);
