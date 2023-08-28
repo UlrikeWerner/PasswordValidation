@@ -129,7 +129,6 @@ public class PasswordValidationTest {
         assertFalse(actual);
     }
 
-    //static String[] passwordList = {"i|7+ptV3Es-H", "hT25,iez9"};
     @ParameterizedTest
     @MethodSource("generate5Passwords")
     void returnTrueWhenPasswordAreValided(String password){
